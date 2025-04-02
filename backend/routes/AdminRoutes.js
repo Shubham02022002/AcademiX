@@ -5,11 +5,13 @@ import {
     adminSignup,
     coursesByAdmin,
     createCourse,
+    isAdmin,
     updateCourse
 } from "../controllers/AdminController.js";
 
 const router = express.Router();
 
+router.get('/me',authenticateJwt, isAdmin);
 router.post('/signup', adminSignup);
 router.post('/login', adminLogin);
 router.post('/courses', authenticateJwt, createCourse);

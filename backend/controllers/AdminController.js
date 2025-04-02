@@ -7,6 +7,10 @@ dotenv.config();
 
 const SECRET = process.env.SECRET;
 
+export const isAdmin = async (req, res) => {
+    res.json({ user: req.user.username });
+}
+
 export const adminSignup = async (req, res) => {
     const { username, password } = req.body;
     const admin = await Admin.findOne({ username });
