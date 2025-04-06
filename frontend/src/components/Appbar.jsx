@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 function Appbar() {
     const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = useState(false);
     const [username, setUsername] = useState("");
     useEffect(() => {
         axios.get('http://localhost:3000/admin/me', {
@@ -14,15 +13,12 @@ function Appbar() {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then((resp) => {
-            if (!resp.data.user) {
-                setLoggedIn(false);
-            } else {
+            if (resp.data.user) {
                 setUsername(resp.data.user);
-                setLoggedIn(true);
             }
         })
     }, []);
-    if (loggedIn) {
+    if (username) {
         return (
             <div style={{ display: "flex", justifyContent: "space-between" }}>
                 <div>
@@ -31,13 +27,13 @@ function Appbar() {
                     </Typography>
                 </div>
                 <div style={{ display: "flex" }}>
-                    <Typography variant="body2">
+                    <Typography variant="body2" style={{ marginRight: "5px" }}>
                         {username}
                     </Typography>
                     <Button variant="contained" onClick={() => {
-                        navigate('/')
-                        setLoggedIn(false);
                         localStorage.setItem("token", null);
+                        window.location = '/';
+                        // navigate('/')
                     }}>Logout</Button>
                 </div>
             </div>
@@ -51,7 +47,7 @@ function Appbar() {
                 </Typography>
             </div>
             <div >
-                <Button variant="contained" onClick={() => {
+                <Button variant="contained" style={{ marginRight: "5    px" }} onClick={() => {
                     navigate('/signup')
 
                 }}>Signup</Button>
@@ -60,6 +56,7 @@ function Appbar() {
                 }}>Signin</Button>
             </div>
         </div>
+
     )
 
 

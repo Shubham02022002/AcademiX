@@ -1,10 +1,12 @@
 import { Button, Card, MenuItem, Select, TextField, Typography, } from "@mui/material";
 import axios from "axios";
 import { useState } from "react";
-import { Bounce, ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 
 function AddCourse() {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -143,6 +145,10 @@ function AddCourse() {
                     </form>
                 </Card>
             </div>
+            <Button variant="contained" onClick={() => {
+                navigate('/courses')
+            }
+            }>Get courses</Button>
         </div>
     )
 }

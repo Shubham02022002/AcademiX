@@ -35,9 +35,9 @@ function Signup() {
                             axios.post('http://localhost:3000/admin/signup', {
                                 username, password
                             }).then((res) => {
-                                // console.log(res);
                                 localStorage.setItem("token", res.data.token);
-                                navigate('/addCourse');
+                                // navigate('/addCourse');
+                                window.location = "/addCourse"
                             })
                         }}>SignUp</Button>
                     </div>

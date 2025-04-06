@@ -28,10 +28,9 @@ export const adminSignup = async (req, res) => {
 
 export const adminLogin = async (req, res) => {
     try {
-
-        const { username, password } = req.headers;
+        const { username, password } = req.body;
         const admin = await Admin.findOne({ username });
-        if (!admin) {
+        if (!admin || !admin.password || !password) {
             return res.status(403).json({ message: 'Invalid username or password' });
         }
         const isPassword = await bcrypt.compare(password, admin.password);
@@ -39,11 +38,10 @@ export const adminLogin = async (req, res) => {
         const token = jwt.sign({ username, role: 'admin' }, SECRET, { expiresIn: '1h' });
         res.json({ message: 'Logged in successfully', token });
     } catch (err) {
-        console.error(err);
+        console.error("Login Error:", err);
         res.status(500).json({ message: "Internal server error" });
     }
-
-}
+};
 
 export const createCourse = async (req, res) => {
     const course = new Course(req.body);
@@ -63,4 +61,16 @@ export const updateCourse = async (req, res) => {
 export const coursesByAdmin = async (req, res) => {
     const courses = await Course.find({});
     res.json({ courses });
+}
+
+export const deleteCourse = async (req, res) => {
+    try {
+        const course = await Course.findByIdAndDelete(req.params.courseId);
+        if (!course) {
+            return res.status(404).json({ "message": "Invalid courseId!" })
+        }
+        res.json({ message: "Course deleted successfully!" });
+    } catch (err) {
+        console.error("Course deletion error: ", err);
+    }
 }
