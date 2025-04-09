@@ -26,10 +26,13 @@ function Appbar() {
                         AcademiX
                     </Typography>
                 </div>
-                <div style={{ display: "flex" }}>
-                    <Typography variant="body2" style={{ marginRight: "5px" }}>
-                        {username}
-                    </Typography>
+                <div style={{ display: "flex", justifyContent: "space-between", width: "340px", height: "40px" }}>
+                    <Button variant="outlined" onClick={() => {
+                        navigate('/addCourse')
+                    }}>Add Course</Button>
+                    <Button variant="outlined" onClick={() => {
+                        navigate('/courses')
+                    }}>Courses</Button>
                     <Button variant="contained" onClick={() => {
                         localStorage.setItem("token", null);
                         window.location = '/';

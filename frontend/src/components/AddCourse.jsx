@@ -145,10 +145,6 @@ function AddCourse() {
                     </form>
                 </Card>
             </div>
-            <Button variant="contained" onClick={() => {
-                navigate('/courses')
-            }
-            }>Get courses</Button>
         </div>
     )
 }

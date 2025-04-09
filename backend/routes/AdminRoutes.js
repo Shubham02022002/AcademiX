@@ -6,6 +6,7 @@ import {
     coursesByAdmin,
     createCourse,
     deleteCourse,
+    getCourse,
     isAdmin,
     updateCourse
 } from "../controllers/AdminController.js";
@@ -18,6 +19,7 @@ router.post('/login', adminLogin);
 router.post('/courses', authenticateJwt, createCourse);
 router.put('/courses/:courseId', authenticateJwt, updateCourse);
 router.get('/courses', authenticateJwt, coursesByAdmin);
-router.delete('/course/:courseId', authenticateJwt, deleteCourse)
+router.get('/courses/:courseId', authenticateJwt, getCourse)
+router.delete('/course/:courseId', authenticateJwt, deleteCourse);
 
 export default router;

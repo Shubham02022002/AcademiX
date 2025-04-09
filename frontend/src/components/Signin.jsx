@@ -30,24 +30,27 @@ function Signin() {
                         }} />
                         <br />
                         <br />
-                        <Button variant='contained' onClick={() => {
-                            axios.post('http://localhost:3000/admin/login', {
-                                username,
-                                password
-                            }, {
-                                headers: {
-                                    "Content-Type": "application/json"
-                                }
-                            }).then((resp) => {
-                                localStorage.setItem("token", resp.data.token);
-                                // navigate('/addCourse');
-                                window.location = '/addCourse';
-                            })
-                                .catch((error) => {
-                                    console.error("Axios error:", error.response?.data || error.message);
-                                });
+                        <div style={{ display: "flex", justifyContent: "space-between" }}>
+                            <Button variant='contained' onClick={() => {
+                                axios.post('http://localhost:3000/admin/login', {
+                                    username,
+                                    password
+                                }, {
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    }
+                                }).then((resp) => {
+                                    localStorage.setItem("token", resp.data.token);
+                                    // navigate('/addCourse');
+                                    window.location = '/addCourse';
+                                })
+                                    .catch((error) => {
+                                        console.error("Axios error:", error.response?.data || error.message);
+                                    });
 
-                        }}>SignIn</Button>
+                            }}>SignIn</Button>
+                            <Button variant='outlined'>Forgot Password?</Button>
+                        </div>
                     </div>
                 </Card >
             </div >

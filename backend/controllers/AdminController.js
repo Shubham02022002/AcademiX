@@ -63,6 +63,15 @@ export const coursesByAdmin = async (req, res) => {
     res.json({ courses });
 }
 
+export const getCourse = async (req, res) => {
+    try {
+        const course = await Course.findById(req.params.courseId);
+        res.json({ course });
+    } catch (err) {
+        console.error("Error in getting the course", err);
+    }
+}
+
 export const deleteCourse = async (req, res) => {
     try {
         const course = await Course.findByIdAndDelete(req.params.courseId);
