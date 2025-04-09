@@ -5,11 +5,18 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Signin from './Signin';
+import { RecoilRoot, atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+
+export const courseState = atom({
+    key: 'courseState',
+    default: null,
+});
 
 const CourseEdit = () => {
     let { courseId } = useParams();
     let [username, setUsername] = useState("");
-    let [course, setCourse] = useState(null);
+    let [course, setCourse] = useRecoilState(courseState);
+
     useEffect(() => {
         axios.get('http://localhost:3000/admin/me', {
             headers: {
@@ -19,16 +26,13 @@ const CourseEdit = () => {
             if (resp.data.user) {
                 setUsername(resp.data.user);
             }
-        })
-    }, []);
-    useEffect(() => {
+        });
         axios.get("http://localhost:3000/admin/courses/" + courseId, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then((resp) => {
-            console.log(resp.data.course);
-            setCourse(resp.data.course)
+            setCourse(resp.data.course);
         })
     }, []);
     if (!username) {
@@ -42,24 +46,25 @@ const CourseEdit = () => {
         </Box>
     }
     return (
+
         <div style={{
             margin: 0,
             overflowX: 'hidden',
         }}>
-            <GrayTopper title={course.title} />
+            <GrayTopper />
             <Grid container>
                 <Grid item lg={8} md={12} sm={12}>
                     <UpdateCard course={course} setCourse={setCourse} />
                 </Grid>
                 <Grid item lg={4} md={12} sm={12}>
-                    <CourseCard course={course} />
+                    <CourseCard />
                 </Grid>
             </Grid>
         </div >
     )
 }
-function CourseCard(props) {
-    const course = props.course;
+function CourseCard() {
+    const course = useRecoilValue(courseState);
     return (
 
         <div style={{ display: "flex", marginTop: 60, justifyContent: "center", width: "100%", marginLeft: 300 }}>
@@ -77,13 +82,15 @@ function CourseCard(props) {
         </div>
     )
 }
-function GrayTopper({ title }) {
+function GrayTopper() {
+    const course = useRecoilValue(courseState);
+    console.log(course);
     return (
         <div style={{ height: 200, background: "#212121", top: 0, width: "100vw", zIndex: 0, marginBottom: -250 }}>
             <div style={{ height: 200, display: 'flex', justifyContent: "center", flexDirection: "column" }}>
                 <div>
                     <Typography style={{ color: "white", fontWeight: 600 }} variant='h3' textAlign={"center"}>
-                        {title}
+                        {course.title}
                     </Typography>
                 </div>
             </div>
@@ -91,7 +98,9 @@ function GrayTopper({ title }) {
     )
 }
 
-function UpdateCard({ course, setCourse }) {
+function UpdateCard() {
+    let course = useRecoilValue(courseState);
+    let setCourse = useSetRecoilState(courseState);
     const [formData, setFormData] = useState({
         title: course.title,
         description: course.description,
