@@ -1,5 +1,6 @@
 import { Button, Card, MenuItem, Select, TextField, Typography, } from "@mui/material";
 import axios from "axios";
+import AxiosInstance from "../api/AxiosInstance";
 import { useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -30,7 +31,7 @@ function AddCourse() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:3000/admin/courses', {
+            await AxiosInstance.post('/admin/courses', {
                 title: formData.title,
                 description: formData.description,
                 imageLink: formData.imageLink,

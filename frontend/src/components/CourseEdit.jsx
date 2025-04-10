@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import Signin from './Signin';
 import { RecoilRoot, atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import AxiosInstance from '../api/AxiosInstance';
 
 export const courseState = atom({
     key: 'courseState',
@@ -18,7 +19,7 @@ const CourseEdit = () => {
     let [course, setCourse] = useRecoilState(courseState);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/admin/me', {
+        AxiosInstance.get('/admin/me', {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
@@ -27,7 +28,7 @@ const CourseEdit = () => {
                 setUsername(resp.data.user);
             }
         });
-        axios.get("http://localhost:3000/admin/courses/" + courseId, {
+        AxiosInstance.get("/admin/courses/" + courseId, {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
@@ -124,7 +125,7 @@ function UpdateCard() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.put('http://localhost:3000/admin/courses/' + course._id, {
+            await AxiosInstance.put('/admin/courses/' + course._id, {
                 title: formData.title,
                 description: formData.description,
                 imageLink: formData.imageLink,

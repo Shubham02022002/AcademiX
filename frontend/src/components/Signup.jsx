@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, TextField, Typography } from "@mui/material";
 import { useState } from 'react';
 import { useNavigate } from "react-router";
+import AxiosInstance from '../api/AxiosInstance';
 
 function Signup() {
     const [username, setUsername] = useState("");
@@ -32,7 +33,7 @@ function Signup() {
                         <br />
                         <br />
                         <Button variant='contained' onClick={() => {
-                            axios.post('http://localhost:3000/admin/signup', {
+                            AxiosInstance.post('/admin/signup', {
                                 username, password
                             }).then((res) => {
                                 localStorage.setItem("token", res.data.token);

@@ -2,11 +2,12 @@ import { Button, Card, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AxiosInstance from "../api/AxiosInstance";
 
 function Courses() {
   const [courses, setCourses] = useState([]);
   useEffect(() => {
-    axios.get('http://localhost:3000/admin/courses/', {
+    AxiosInstance.get('/admin/courses/', {
       headers: {
         "Authorization": "Bearer " + localStorage.getItem("token")
       }

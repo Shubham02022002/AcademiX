@@ -3,6 +3,7 @@ import { Button, TextField, Typography } from "@mui/material";
 import axios from 'axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AxiosInstance from '../api/AxiosInstance';
 
 function Signin() {
     const navigate = useNavigate();
@@ -32,7 +33,7 @@ function Signin() {
                         <br />
                         <div style={{ display: "flex", justifyContent: "space-between" }}>
                             <Button variant='contained' onClick={() => {
-                                axios.post('http://localhost:3000/admin/login', {
+                                AxiosInstance.post('/admin/login', {
                                     username,
                                     password
                                 }, {

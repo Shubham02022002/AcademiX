@@ -3,12 +3,13 @@ import AppBar from '@mui/material/AppBar';
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import AxiosInstance from "../api/AxiosInstance";
 
 function Appbar() {
     const navigate = useNavigate();
     const [username, setUsername] = useState("");
     useEffect(() => {
-        axios.get('http://localhost:3000/admin/me', {
+        AxiosInstance.get('/admin/me', {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
