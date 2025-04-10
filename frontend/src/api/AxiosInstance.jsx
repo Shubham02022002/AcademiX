@@ -1,10 +1,9 @@
 import axios from 'axios';
 
 const AxiosInstance = axios.create({
-    baseURL: import.meta.VITE_API_URL,
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:3000',
     headers: {
         'Content-Type': 'application/json',
-        // 'Authorization': 'Bearer ' + localStorage.getItem("token"),
     },
 });
 

@@ -8,8 +8,8 @@ import Signin from './Signin';
 import { RecoilRoot, atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import AxiosInstance from '../api/AxiosInstance';
 
-export const courseState = atom({
-    key: 'courseState',
+const courseState = atom({
+    key: 'courseStateKey',
     default: null,
 });
 
